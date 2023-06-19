@@ -12,9 +12,10 @@ class Topic(models.Model):
         """Возвращает строковое представление модели."""
         return self.text
 
+
 class Entry(models.Model):
     """Информация по темам изученная пользователем"""
-    topic = models.ForeignKey(Topic,on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
@@ -23,4 +24,4 @@ class Entry(models.Model):
 
     def __str__(self):
         """Возврат строкогого представления модели"""
-        return self.text[:50] + '...'
+        return self.text[:50] if len(self.text) < 50 else self.text[:50] + '...'
