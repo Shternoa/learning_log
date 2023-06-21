@@ -8,5 +8,5 @@ app_name = 'learning_logs'
 
 urlpatterns = [
     # Домашняя страница
-    path('', views.index, name='index'),
+    path('', views.index, name='index'), path('topics/', views.topics, name='topics')
 ]
