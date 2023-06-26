@@ -26,7 +26,7 @@ def topic(request, topic_id):
     """Выводит одну тему и все ее записи."""
     topic = Topic.objects.get(id=topic_id)
     if topic.owner != request.user:
-        raise Http404
+        check_events(request)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -64,6 +64,8 @@ def new_entry(request, topic_id):
         if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.topic = topic
+            if topic.owner != request.user:
+                check_events(request)
             new_entry.save()
             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic_id]))
     context = {'topic': topic, 'form': form}
@@ -76,7 +78,7 @@ def edit_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
     if topic.owner != request.user:
-        raise Http404
+        check_events(request)
 
     if request.method != 'POST':
         # Исходный запрос и форма заполняется текущими записями
@@ -89,3 +91,8 @@ def edit_entry(request, entry_id):
             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id]))
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+def check_events(request):
+    if topic.owner != request.user:
+        raise Http404
