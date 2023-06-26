@@ -6,19 +6,34 @@
 </head>
 <body>
 {% extends "learning_logs/base.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+    <h1>Topics</h1>
+{% endblock header %}
+
 {% block content %}
-    <p>Topics</p>
     <ul>
         {% for topic in topics %}
             <li>
-                <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-                <a href="{% url 'learning_logs:new_topic' %}">Add a new topic:</a>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+                        </h3>
+                    </div>
+                </div>
             </li>
         {% empty %}
             <li>No topics have been added yet.</li>
         {% endfor %}
     </ul>
+
+    <div class="mt-3">
+        <a href="{% url 'learning_logs:new_topic' %}" class="btn btn-primary">Add new topic</a>
+    </div>
 {% endblock content %}
+
 
 </body>
 </html>

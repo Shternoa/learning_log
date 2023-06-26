@@ -6,15 +6,21 @@
 </head>
 <body>
 {% extends "learning_logs/base.html" %}
+{% load bootstrap5 %}
+
 {% block content %}
-    <form method="post" action="{% url 'users:register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <div class="container">
+        <h2>Register an account:</h2>
 
-        <button name="submit">register</button>
-        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"/>
-    </form>
+        <form method="post" action="{% url 'users:register' %}" class="needs-validation">
+            {% csrf_token %}
+            {{ form.as_p }}
 
+            <button type="submit" class="btn btn-primary">Register</button>
+            <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"/>
+        </form>
+    </div>
 {% endblock content %}
+
 </body>
 </html>

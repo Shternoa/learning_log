@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'learning_logs',
     'users',
+    'bootstrap5'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Мои настройки
 LOGIN_URL = '/users/login/'
+
